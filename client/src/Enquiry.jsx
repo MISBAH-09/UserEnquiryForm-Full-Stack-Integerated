@@ -1,7 +1,6 @@
 import React from 'react'
 import { Button, Checkbox, Label, TextInput, Textarea } from "flowbite-react";
-import { Table, TableBody, TableCell, TableHead, TableHeadCell, TableRow } from "flowbite-react";
-import EnquiryList from './enquiry/EnquiryList';
+import EnquiryList from './enquiry/EnquiryList.jsx';
 
 
 const Enquiry = () => {

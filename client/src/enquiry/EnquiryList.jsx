@@ -1,4 +1,5 @@
 import React from 'react'
+import { Table, TableBody, TableCell, TableHead, TableHeadCell, TableRow } from "flowbite-react";
 
 function EnquiryList() {
   return (
