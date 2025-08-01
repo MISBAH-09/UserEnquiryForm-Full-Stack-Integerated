@@ -1,10 +1,12 @@
 let express=require('express');
 let mongoose=require('mongoose');
+const enquiryRoutes = require('./App/routes/web/enquiryroutes');
 require('dotenv').config();
-
 let app=express();
 
 app.use(express.json());
+app.use('/api/website/enquiry',enquiryRoutes)
+
 mongoose.connect(process.env.DBUrl).then(()=>{
     console.log("Data base has been connected")
     app.listen(process.env.PORT||"8000",()=>{
