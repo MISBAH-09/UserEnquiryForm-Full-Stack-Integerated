@@ -1,12 +1,27 @@
 import React from 'react'
 import { Button, Checkbox, Label, TextInput, Textarea } from "flowbite-react";
 import EnquiryList from './enquiry/EnquiryList.jsx';
-
+import axios from 'axios';
 
 const Enquiry = () => {
     let saveEnquiry =(e)=>{
-        alert("data saved");
         e.preventDefault();
+
+        let formData={
+            sName:e.target.name.value,
+            sEmail:e.target.email.value,
+            sPhone:e.target.phone.value,
+            sMessage:e.target.message.value
+        }
+
+        axios.post('http://localhost:8000/api/website/enquiry/insert', formData)
+        .then((response) => {
+            console.log(response.data);
+        })
+        .catch((error) => {
+            console.error(error.response ? error.response.data : error.message);
+        });
+
     }
   return (
     <div>
@@ -17,19 +32,19 @@ const Enquiry = () => {
                 <form action="" onSubmit={saveEnquiry}>
                     <div className='py-3'>
                         <Label htmlFor="name">Your Name</Label>
-                        <TextInput type="text" placeholder="Your Name" required />
+                        <TextInput name='name' type="text" placeholder="Your Name" required />
                     </div>
                     <div className='py-3'>
                         <Label htmlFor="email">Your Email</Label>
-                        <TextInput type="email" placeholder="Your Email" required />
+                        <TextInput name='email' type="text" placeholder="Your Email" required />
                     </div>
                     <div className='py-3'>
                         <Label htmlFor="phone">Your Phone</Label>
-                        <TextInput type="text" placeholder="Your Phone" required />
+                        <TextInput name='phone' type="text" placeholder="Your Phone" required />
                     </div>
                     <div className='py-3'>
                         <Label htmlFor="message">Message</Label>
-                        <Textarea placeholder="Message..." required rows={4} />
+                        <Textarea name='message' placeholder="Message..." required rows={4} />
                     </div>
                     <div className='py-3'>
                          <Button type="submit" className='w-[100%] bg-gray-800'>Submit</Button>
