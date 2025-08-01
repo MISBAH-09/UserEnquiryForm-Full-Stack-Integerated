@@ -9,7 +9,7 @@ app.use('/api/website/enquiry',enquiryRoutes)
 
 mongoose.connect(process.env.DBUrl).then(()=>{
     console.log("Data base has been connected")
-    app.listen(process.env.PORT||"8000",()=>{
+    app.listen("8000",()=>{
         console.log('Server is listening on port :',process.env.PORT);
     })
 }).catch((err)=>{
