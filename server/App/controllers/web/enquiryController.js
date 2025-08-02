@@ -1,17 +1,17 @@
 const enquiryModel = require("../../models/enquirymodel");
 
 let enquiryInsert=(request, response)=>{
-    let { sName, sEmail, sPhone, sMessage } = request.body;
+    let { name, email, phone, message } = request.body;
 
-  if (!sName || !sEmail || !sPhone || !sMessage) {
+  if (!name || !email || !phone || !message) {
     return response.status(400).send("Missing required fields");
   }
 
   let enquiry = new enquiryModel({
-    name: sName,
-    email: sEmail,
-    phone: sPhone,
-    message: sMessage
+    name,
+    email,
+    phone,
+    message
   });
 
   enquiry.save()

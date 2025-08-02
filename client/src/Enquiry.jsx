@@ -1,30 +1,57 @@
 import React from 'react'
 import { Button, Checkbox, Label, TextInput, Textarea } from "flowbite-react";
 import EnquiryList from './enquiry/EnquiryList.jsx';
+import { ToastContainer, toast } from 'react-toastify';
 import axios from 'axios';
+import { useState } from 'react';
 
 const Enquiry = () => {
+    let [formData,setformData]=useState({
+        name:'',
+        email:'',
+        phone:'',
+        message:''
+    })
+
+
     let saveEnquiry =(e)=>{
         e.preventDefault();
 
-        let formData={
-            sName:e.target.name.value,
-            sEmail:e.target.email.value,
-            sPhone:e.target.phone.value,
-            sMessage:e.target.message.value
-        }
+        // let formData={
+        //     name:e.target.name.value,
+        //     email:e.target.email.value,
+        //     phone:e.target.phone.value,
+        //     message:e.target.message.value
+        // }
 
         axios.post('http://localhost:8000/api/website/enquiry/insert', formData)
         .then((response) => {
+            toast.success("Data Saved Successfully");
             console.log(response.data);
+            setformData({
+                name:'',
+                email:'',
+                phone:'',
+                message:''
+            })
         })
         .catch((error) => {
             console.error(error.response ? error.response.data : error.message);
         });
+     
+    }
+    let getValue=(e)=>{
+        let inputName=e.target.name;
+        let inputValue=e.target.value;
+        let oldData={...formData};
+
+        oldData[inputName]=inputValue;
+        setformData(oldData);
 
     }
   return (
     <div>
+     <ToastContainer/>
     <h1 className='text-[40px]  font-bold text-center py-6'>USER ENQUIRY FORM</h1>
       <div className='grid grid-cols-[30%_auto] gap-5 bg-pink-600 '>
             <div className='bg-gray-400 mx-4 px-4'>
@@ -32,19 +59,19 @@ const Enquiry = () => {
                 <form action="" onSubmit={saveEnquiry}>
                     <div className='py-3'>
                         <Label htmlFor="name">Your Name</Label>
-                        <TextInput name='name' type="text" placeholder="Your Name" required />
+                        <TextInput name='name' type="text" value={formData.name} onChange={getValue} placeholder="Your Name" required />
                     </div>
                     <div className='py-3'>
                         <Label htmlFor="email">Your Email</Label>
-                        <TextInput name='email' type="text" placeholder="Your Email" required />
+                        <TextInput name='email' type="text" value={formData.email}  onChange={getValue} placeholder="Your Email" required />
                     </div>
                     <div className='py-3'>
                         <Label htmlFor="phone">Your Phone</Label>
-                        <TextInput name='phone' type="text" placeholder="Your Phone" required />
+                        <TextInput name='phone' type="text" value={formData.phone} onChange={getValue} placeholder="Your Phone" required />
                     </div>
                     <div className='py-3'>
                         <Label htmlFor="message">Message</Label>
-                        <Textarea name='message' placeholder="Message..." required rows={4} />
+                        <Textarea name='message' value={formData.message} onChange={getValue} placeholder="Message..." required rows={4} />
                     </div>
                     <div className='py-3'>
                          <Button type="submit" className='w-[100%] bg-gray-800'>Submit</Button>
