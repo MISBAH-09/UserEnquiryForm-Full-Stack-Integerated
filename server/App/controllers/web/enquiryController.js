@@ -23,6 +23,10 @@ let enquiryInsert=(request, response)=>{
       response.status(500).send("Failed to save: " + err.message);
     });
 }
+let Enquiryview=async(request,respnse)=>{
+    let enquiry=await enquiryModel.find();
+    respnse.send({status:1,enquiry:enquiry});
+}
 
 
-module.exports={enquiryInsert}
+module.exports={enquiryInsert,Enquiryview}

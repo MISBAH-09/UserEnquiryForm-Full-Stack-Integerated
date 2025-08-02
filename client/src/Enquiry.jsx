@@ -4,8 +4,10 @@ import EnquiryList from './enquiry/EnquiryList.jsx';
 import { ToastContainer, toast } from 'react-toastify';
 import axios from 'axios';
 import { useState } from 'react';
+import { useEffect } from 'react';
 
 const Enquiry = () => {
+    let [enquirylist,setenquirylist]=useState([]);
     let [formData,setformData]=useState({
         name:'',
         email:'',
@@ -23,7 +25,7 @@ const Enquiry = () => {
         //     phone:e.target.phone.value,
         //     message:e.target.message.value
         // }
-
+    
         axios.post('http://localhost:8000/api/website/enquiry/insert', formData)
         .then((response) => {
             toast.success("Data Saved Successfully");
@@ -33,7 +35,8 @@ const Enquiry = () => {
                 email:'',
                 phone:'',
                 message:''
-            })
+            });
+            getAllEnquiry();
         })
         .catch((error) => {
             console.error(error.response ? error.response.data : error.message);
@@ -47,8 +50,29 @@ const Enquiry = () => {
 
         oldData[inputName]=inputValue;
         setformData(oldData);
-
     }
+
+    let getAllEnquiry = () => {
+  axios.get('http://localhost:8000/api/website/enquiry/view')
+    .then((response) => {
+      console.log("Raw API response:", response.data);
+      return response.data;
+    })
+    .then((finalData) => {
+      if(finalData.status === 1){
+        console.log("Setting enquiry list to:", finalData.enquirylist);
+        setenquirylist(finalData.enquiry);
+      }
+    })
+    .catch(error => {
+      console.error(error);
+    });
+};
+
+
+    useEffect(()=>{
+        getAllEnquiry()
+    },[])
   return (
     <div>
      <ToastContainer/>
@@ -78,7 +102,7 @@ const Enquiry = () => {
                     </div>
                 </form>
             </div>
-            <EnquiryList/>
+            <EnquiryList data={enquirylist}/>
 
       </div>
       
