@@ -34,13 +34,26 @@ let Enquirydelete=async(request,respnse)=>{
     respnse.send({status:1,message:"delete successfully",enquirydel});
 
 }
-let Enquiryupdate=async(request,respnse)=>{
+let Enquiryviewone=async(request,respnse)=>{
     let editId=request.params.id;
     let updateres=await enquiryModel.findOne({_id:editId});
     respnse.send({status:1,message:"Find successfully",updateres});
 
 }
+let EnquiryUpdate=async(request,respnse)=>{
+    let updId=request.params.id;
+    let {name,email,phone,message}=request.body;
+    let updateobj={
+        name,
+        email,
+        phone,
+        message
+    }
+    let updateres=await enquiryModel.updateOne({_id:updId},updateobj);
+    respnse.send({status:1,message:"Update successfully",updateres});
+
+}
 
 
 
-module.exports={enquiryInsert,Enquiryview,Enquirydelete,Enquiryupdate}
+module.exports={enquiryInsert,Enquiryview,Enquirydelete,Enquiryviewone,EnquiryUpdate}
