@@ -2,6 +2,10 @@ import React from 'react'
 import { Table, TableBody, TableCell, TableHead, TableHeadCell, TableRow } from "flowbite-react";
 
 function EnquiryList({data = []}) {
+  let deleteRow=(delId)=>{
+    alert(delId);
+    
+  }
   console.log(data)
 return (
   <div >
@@ -16,12 +20,8 @@ return (
           <TableHeadCell>Email</TableHeadCell>
           <TableHeadCell>Phone</TableHeadCell>
           <TableHeadCell>Message</TableHeadCell>
-          <TableHeadCell>
-          <span className="sr-only">Edit</span>
-          </TableHeadCell>
-          <TableHeadCell>
-          <span className="sr-only">Delete</span>
-          </TableHeadCell>
+          <TableHeadCell>Edit</TableHeadCell>
+          <TableHeadCell>Delete</TableHeadCell>
         </TableRow>
         </TableHead>
         <TableBody className="divide-y">
@@ -43,7 +43,7 @@ return (
                 </a>
                 </TableCell>
                 <TableCell>
-                <a href="#" className="font-medium text-primary-600 hover:underline dark:text-primary-500">
+                <a href="#" onClick={()=>deleteRow(item._id)} className="font-medium text-primary-600 hover:underline dark:text-primary-500">
                     Delete
                 </a>
                 </TableCell>

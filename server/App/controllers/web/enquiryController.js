@@ -28,5 +28,12 @@ let Enquiryview=async(request,respnse)=>{
     respnse.send({status:1,enquiry:enquiry});
 }
 
+let Enquirydelete=async(request,respnse)=>{
+    let delId=request.params.id;
+    let enquirydel=await enquiryModel.deleteOne({_id:delId});
+    respnse.send({status:1,message:"delete successfully",enquirydel});
 
-module.exports={enquiryInsert,Enquiryview}
+}
+
+
+module.exports={enquiryInsert,Enquiryview,Enquirydelete}
