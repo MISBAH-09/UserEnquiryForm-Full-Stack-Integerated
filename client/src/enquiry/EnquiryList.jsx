@@ -1,13 +1,23 @@
 import React from 'react'
-import { Table, TableBody, TableCell, TableHead, TableHeadCell, TableRow } from "flowbite-react";
+import { Table, TableBody, TableCell, TableHead, TableHeadCell, TableRow, Toast } from "flowbite-react";
+import axios from 'axios';
+import { ToastContainer, toast } from 'react-toastify';
 
-function EnquiryList({data = []}) {
-  let deleteRow=(delId)=>{
-    alert(delId);
-    
+  function EnquiryList({data = [], getAllEnquiry}) {
+    let deleteRow = (delId) => {
+    axios.delete(`http://localhost:8000/api/website/enquiry/delete/${delId}`)
+      .then(() => {
+        toast.success("Delete Successfully");
+        getAllEnquiry();
+      })
+      .catch(error => {
+        toast.error("Delete Failed");
+        console.error(error);
+      });
   }
-  console.log(data)
+
 return (
+
   <div >
     <div className='bg-pink-600 mx-4 px-4'>
       <h2 className='text-[20px] font-bold p-5'>Enquiry form</h2>

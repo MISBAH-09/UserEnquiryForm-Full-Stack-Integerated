@@ -102,7 +102,7 @@ const Enquiry = () => {
                     </div>
                 </form>
             </div>
-            <EnquiryList data={enquirylist}/>
+            <EnquiryList data={enquirylist} getAllEnquiry={getAllEnquiry}/>
 
       </div>
       
